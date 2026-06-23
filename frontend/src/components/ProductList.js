@@ -6,7 +6,7 @@ const ProductList = () => {
   const [cursor, setCursor] = useState(null);
 
   const fetchProducts = useCallback(async () => {
-    let url = "http://localhost:5000/api/products?limit=20";
+    let url ="https://code-vectortask.onrender.com/api/products?limit=20";
 
     if (cursor) {
       url += `&cursor=${cursor}`;
