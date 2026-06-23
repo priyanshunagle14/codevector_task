@@ -5,11 +5,11 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [cursor, setCursor] = useState(null);
 
-  const fetchProducts = useCallback(async () => {
-    let url ="https://code-vectortask.onrender.com/api/products?limit=20";
+  const fetchProducts = useCallback(async (currentCursor = null) => {
+    let url = "https://code-vectortask.onrender.com/api/products?limit=20";
 
-    if (cursor) {
-      url += `&cursor=${cursor}`;
+    if (currentCursor) {
+      url += `&cursor=${currentCursor}`;
     }
 
     const res = await fetch(url);
@@ -17,7 +17,7 @@ const ProductList = () => {
 
     setProducts(data.data);
     setCursor(data.nextCursor);
-  }, [cursor]);
+  }, []);
 
   useEffect(() => {
     fetchProducts();
@@ -33,7 +33,7 @@ const ProductList = () => {
         ))}
       </div>
 
-      <button onClick={fetchProducts} style={styles.btn}>
+      <button onClick={() => fetchProducts(cursor)} style={styles.btn}>
         Next Page →
       </button>
     </div>
