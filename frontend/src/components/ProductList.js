@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ProductCard from "./ProductCard";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [cursor, setCursor] = useState(null);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     let url = "http://localhost:5000/api/products?limit=20";
 
     if (cursor) {
@@ -17,11 +17,12 @@ const ProductList = () => {
 
     setProducts(data.data);
     setCursor(data.nextCursor);
-  };
+  }, [cursor]);
 
-    useEffect(() => {
+  useEffect(() => {
     fetchProducts();
-}, [fetchProducts]);
+  }, [fetchProducts]);
+
   return (
     <div>
       <h2>Products</h2>
