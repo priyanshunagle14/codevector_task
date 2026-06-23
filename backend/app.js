@@ -5,9 +5,10 @@ const productRoutes = require("./routes/productRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://codevector-task-gold.vercel.app'
+}));
 app.use(express.json());
-
 
 app.get("/", (req, res) => {
   res.json({
