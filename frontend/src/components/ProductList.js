@@ -19,10 +19,9 @@ const ProductList = () => {
     setCursor(data.nextCursor);
   };
 
-  useEffect(() => {
+    useEffect(() => {
     fetchProducts();
-  }, []);
-
+}, [fetchProducts]);
   return (
     <div>
       <h2>Products</h2>
