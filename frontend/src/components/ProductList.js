@@ -4,8 +4,10 @@ import ProductCard from "./ProductCard";
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [cursor, setCursor] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = useCallback(async (currentCursor = null) => {
+    setLoading(true);
     let url = "https://code-vectortask.onrender.com/api/products?limit=20";
 
     if (currentCursor) {
@@ -17,6 +19,7 @@ const ProductList = () => {
 
     setProducts(data.data);
     setCursor(data.nextCursor);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -27,14 +30,16 @@ const ProductList = () => {
     <div>
       <h2>Products</h2>
 
+      {loading && <p>Loading products, please wait...</p>}
+
       <div style={styles.grid}>
         {products.map((p) => (
           <ProductCard key={p._id} product={p} />
         ))}
       </div>
 
-      <button onClick={() => fetchProducts(cursor)} style={styles.btn}>
-        Next Page →
+      <button onClick={() => fetchProducts(cursor)} style={styles.btn} disabled={loading}>
+        {loading ? "Loading..." : "Next Page →"}
       </button>
     </div>
   );
